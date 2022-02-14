@@ -7,11 +7,11 @@ import { Stack } from "./Stack";
 
 export const Navigator: React.FC<INavigatorProps> = ({
   linking,
-  user
+  displayLogin
 }) => (
   <NavigationContainer linking={linking}>
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      {!user ? (
+      {displayLogin ? (
         <Stack.Screen
           name="Login"
           component={Login}
