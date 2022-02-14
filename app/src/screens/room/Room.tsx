@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import { Text, View } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 
-export const Login = () => {
+export const Room = () => {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
 
   return (
     <View>
-      <Text>Login</Text>
+      <Text>Room</Text>
     </View>
   );
 };
