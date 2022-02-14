@@ -1,8 +1,6 @@
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { IUser } from 'models';
 
-const DEFAULT_USER_NAME = 'Anonymous';
-
 export const onAuthStateChanged = (listener: (user: IUser | null) => void) => {
     const handleFirebaseAuthStateChanged = (firebaseUser: FirebaseAuthTypes.User | null): void => {
         if (!firebaseUser) {
@@ -11,7 +9,8 @@ export const onAuthStateChanged = (listener: (user: IUser | null) => void) => {
         }
 
         const user: IUser = {
-            name: firebaseUser.displayName ?? DEFAULT_USER_NAME,
+            userId: firebaseUser.uid,
+            name: firebaseUser.displayName,
             avatarImageUrl: firebaseUser.photoURL
         };
 
