@@ -1,18 +1,20 @@
 import React, { useEffect } from "react";
-import { Text, View } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 
-import Logo from "assets/logo.svg";
+import { LoginView } from "./LoginView";
 
 export const Login = () => {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
 
+  const handleFacebookPress = () => {}
+  const handleGooglePress = () => {}
+
   return (
-    <View>
-      <Text>Login</Text>
-      <Logo />
-    </View>
+    <LoginView
+      onFacebookLoginPress={handleFacebookPress}
+      onGoogleLoginPress={handleGooglePress}
+    />
   );
 };

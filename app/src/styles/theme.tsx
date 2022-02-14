@@ -1,7 +1,22 @@
 import { colors } from "./colors";
+import { ITheme } from "./ITheme";
 
-export const theme = {
-    colors: {
-        ...colors
-    }
+const text = {
+  fontFamily: 'Montserrat',
+  fontSize: 14
+};
+
+export const theme: ITheme = {
+  colors: {
+    ...colors
+  },
+  text,
+  textMedium: {
+    ...text,
+    fontWeight: '500',
+  },
+  textBold: {
+    ...text,
+    fontWeight: '700',
+  }
 };
