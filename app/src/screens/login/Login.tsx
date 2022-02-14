@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import SplashScreen from "react-native-splash-screen";
+import { loginWithFacebook } from "services/auth";
 
 import { LoginView } from "./LoginView";
 
@@ -8,7 +9,14 @@ export const Login = () => {
     SplashScreen.hide();
   }, []);
 
-  const handleFacebookPress = () => {}
+  const handleFacebookPress = async () => {
+    try {
+      loginWithFacebook();
+    } catch(err) {
+      // TODO handle error
+    }
+  }
+
   const handleGooglePress = () => {}
 
   return (
