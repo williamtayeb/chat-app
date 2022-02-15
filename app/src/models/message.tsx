@@ -97,3 +97,7 @@ export const addMessage = async (message: INewMessage): Promise<IMessage> => {
 export const addImageMessage = async (roomId: string, imageUrl: string): Promise<IMessage> => {
   return addMessage({ roomId, imageUrl, type: 'image' });
 }
+
+export const addTextMessage = async (roomId: string, content: string): Promise<IMessage> => {
+  return addMessage({ roomId, content, type: 'text' });
+}

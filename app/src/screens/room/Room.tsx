@@ -5,7 +5,7 @@ import { FirebaseFirestoreTypes as FirestoreTypes } from '@react-native-firebase
 
 import { RoomView } from "./RoomView";
 import { IMessage, INewMessage } from "models/types";
-import { addImageMessage, addMessage, getMessagesByRoomId } from "models/message";
+import { addImageMessage, addMessage, addTextMessage, getMessagesByRoomId } from "models/message";
 import { getErrorMessage } from "errors/utils";
 import { RoomNavigationProp } from "navigation/types";
 import { getImageFromCamera, getImageFromGallery } from "services/image-picker";
@@ -120,8 +120,28 @@ export const Room: React.FC<IRoomProps> = ({ route, navigation }) => {
     setDisplayImageUploadOptions(!displayImageUploadOptions);
   }
 
-  const handleInputChangeText = (text: string): void => {}
-  const sendMessage = (): void => {}
+  const handleInputChangeText = (text: string): void => {
+    setInputValue(text);
+  }
+
+  const sendMessage = async (): Promise<void> => {
+    if (!inputValue || inputValue.length == 0) return;
+
+    try {
+      const newMessage = await addTextMessage(roomId, inputValue);
+
+      setMessages([newMessage, ...messages])
+      setInputValue('');
+
+      /*if (askForPushNotifications) {
+        setAskForPushNotifications(false);
+        setDisplayPushNotificationAlert(true);
+      }*/
+    } catch(err) {
+      const message = getErrorMessage(err);
+      setErrorMessage(message);
+    }
+  }
 
   const dismissError = (): void => {
     setErrorMessage(null);
