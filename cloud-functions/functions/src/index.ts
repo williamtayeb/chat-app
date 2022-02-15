@@ -1,80 +1,21 @@
 import * as functions from "firebase-functions";
-import { firestore, initializeApp, messaging } from 'firebase-admin';
+import { initializeApp } from 'firebase-admin';
 
+import { Message } from "./models/types";
+import { Collections } from "./services/firestore";
+import { getPushNotificationTokens } from "./models/room-subscription";
+import { updateChatRoomTimestamp } from "./models/chat-room";
+import { sendPushNotifications } from "./services/messaging";
+
+// Initialize the firebase admin SDK to access firestore
 initializeApp();
 
-export interface Message {
-  id: string;
-  userId: string;
-  roomId: string,
-  author: string;
-  avatarImageUrl: string;
-  content: string;
-  imageUrl: string;
-  createdAt: firestore.Timestamp;
-  type: 'text' | 'image';
-}
-
-export interface RoomSubscription {
-  userId: string;
-  roomId: string;
-  pushNotificationToken: string;
-  enabled: boolean;
-}
-
-export enum Collections {
-  ChatRooms = 'chatRooms',
-  Messages = 'messages',
-  RoomSubscriptions = 'roomSubscriptions'
-}
-
-const config = {
-  linkPrefix: 'chatapp://',
-  roomPath: 'room/'
-};
-
-const updateChatRoomTimestamp = async (roomId: string) => {
-  await firestore()
-    .collection(Collections.ChatRooms)
-    .doc(roomId)
-    .update({ updatedAt: new Date() });
-};
-
-const sendPushNotifications = async (message: Message) => {
-  const tokens = await getTokens(message.roomId);
-
-  const payload: messaging.MessagingPayload = {
-    notification: {
-      title: message.author,
-      body: message.content
-    },
-    data: {
-      link: getRoomDeepLink(message.roomId)
-    }
-  };
-
-  await messaging().sendToDevice(tokens, payload);
-}
-
-const getTokens = async (roomId: string, limit: number = 500): Promise<string[]> => {
-  const querySnapshot = await firestore()
-    .collection(Collections.RoomSubscriptions)
-    .where('roomId', '==', roomId)
-    .limit(limit)
-    .get();
-  
-  const tokens: string[] = querySnapshot.docs.map(doc => {
-    const subscription = doc.data() as RoomSubscription;
-    return subscription.pushNotificationToken;
-  });
-
-  return tokens;
-}
-
-const getRoomDeepLink = (roomId: string) => {
-  return `${config.linkPrefix}${config.roomPath}${roomId}`
-}
-
+/**
+ * A cloud firestore function that triggers whenever a new
+ * message has been created. This function is responsible for
+ * updating the chat room timestamp that is associated with
+ * the message and send a push notification to all subscribers.
+ */
 export const handleNewMessage = functions
   .firestore
   .document(`${Collections.Messages}/{messageId}`)
@@ -82,5 +23,7 @@ export const handleNewMessage = functions
     const newMessage = snap.data() as Message;
 
     await updateChatRoomTimestamp(newMessage.roomId);
-    await sendPushNotifications(newMessage);
+
+    const tokens = await getPushNotificationTokens(newMessage.roomId);
+    await sendPushNotifications(tokens, newMessage);
   });
