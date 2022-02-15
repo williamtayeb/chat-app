@@ -1,8 +1,8 @@
 import { Linking } from "react-native";
 import messaging from '@react-native-firebase/messaging';
+import { LinkingOptions } from "@react-navigation/native";
 
 import { linkingConfig } from "config";
-import { LinkingOptions } from "@react-navigation/native";
 import { StackParamList } from "./Stack";
 
 const getInitialURL = async () => {
