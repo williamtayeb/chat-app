@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { Navigator } from "navigation";
-import { IUser } from "models";
+import { IUser } from "models/types";
 import { onAuthStateChanged, signOut } from "services/auth";
 import { ThemeContext } from "context";
 import { theme } from "styles";
@@ -25,7 +25,7 @@ const App: React.FC = () => {
   useEffect(() => {
     // TODO remove this comment and the below statement
     //signOut();
-    //seedRandomData(10);
+    seedRandomData(10, 150);
 
     // Listen for changes to auth state to check if user
     // is already logged in
