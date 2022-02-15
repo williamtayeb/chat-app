@@ -8,6 +8,12 @@ import { GOOGLE_WEB_CLIENT_ID } from 'react-native-dotenv';
 
 import { IUser } from 'models';
 
+/**
+ * Listen for changes in user auth state
+ * @param listener Callback function that is triggered whenever
+ * auth state changes
+ * @returns An unsubscribe function to stop listening
+ */
 export const onAuthStateChanged = (listener: (user: IUser | null) => void) => {
     const handleFirebaseAuthStateChanged = (firebaseUser: FirebaseAuthTypes.User | null): void => {
         if (!firebaseUser) {
@@ -35,14 +41,14 @@ export const loginWithFacebook = async (): Promise<void> => {
   const result = await LoginManager.logInWithPermissions(permissions);
 
   if (result.isCancelled) {
-    throw 'User cancelled the login process';
+    throw new Error("User cancelled the login process");
   }
 
   // Once signed in, get the users AccesToken
   const data = await AccessToken.getCurrentAccessToken();
 
   if (!data) {
-    throw 'Something went wrong obtaining access token';
+    throw new Error("Something went wrong obtaining access token");
   }
 
   // Create a Firebase credential with the AccessToken

@@ -1,15 +1,18 @@
 import React, { useContext } from "react";
-import { StatusBar, StyleSheet, Text, View } from "react-native";
+import { Alert, StatusBar, StyleSheet, Text, View } from "react-native";
 
 import Logo from "assets/logo.svg";
 import { ITheme } from "styles";
 import { ThemeContext } from "context";
 import { Button } from "./components";
 import { ButtonOutline } from "./components/ButtonOutline";
+import { handleErrorMessage } from "errors";
 
 interface ILoginViewProps {
   onFacebookLoginPress: () => any;
   onGoogleLoginPress: () => any;
+  onErrorAlertDismissPress: () => any;
+  errorMessage: string;
 }
 
 /**
@@ -22,10 +25,14 @@ interface ILoginViewProps {
  */
 export const LoginView: React.FC<ILoginViewProps> = ({
   onFacebookLoginPress,
-  onGoogleLoginPress
+  onGoogleLoginPress,
+  onErrorAlertDismissPress,
+  errorMessage
 }) => {
   const theme = useContext(ThemeContext);
   const styles = buildStyleSheet(theme);
+
+  handleErrorMessage(errorMessage, onErrorAlertDismissPress);
 
   return (
     <View style={{ flex: 1 }}>

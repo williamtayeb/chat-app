@@ -1,4 +1,5 @@
-import React, { useEffect } from "react";
+import { getErrorMessage } from "errors";
+import React, { useEffect, useState } from "react";
 import SplashScreen from "react-native-splash-screen";
 import { loginWithFacebook, loginWithGoogle } from "services/auth";
 
@@ -9,6 +10,8 @@ import { LoginView } from "./LoginView";
  * for handling user interactions with the login view.
  */
 export const Login: React.FC = () => {
+  const [errorMessage, setErrorMessage] = useState<string | null>();
+
   useEffect(() => {
     SplashScreen.hide();
   }, []);
@@ -17,22 +20,30 @@ export const Login: React.FC = () => {
     try {
       await loginWithFacebook();
     } catch(err) {
-      // TODO handle error
+      const message = getErrorMessage(err);
+      setErrorMessage(message);
     }
-  }
+  };
 
   const handleGooglePress = async () => {
     try {
       await loginWithGoogle();
     } catch(err) {
-      // TODO handle error
+      const message = getErrorMessage(err);
+      setErrorMessage(message);
     }
+  };
+
+  const handleErrorDismissPress = () => {
+    setErrorMessage(null);
   }
 
   return (
     <LoginView
       onFacebookLoginPress={handleFacebookPress}
       onGoogleLoginPress={handleGooglePress}
+      onErrorAlertDismissPress={handleErrorDismissPress}
+      errorMessage={errorMessage}
     />
   );
 };
