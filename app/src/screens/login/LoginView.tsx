@@ -4,7 +4,7 @@ import { StatusBar, StyleSheet, View } from "react-native";
 import { ITheme } from "styles";
 import { ThemeContext } from "context";
 import { Button, ButtonOutline } from "./components";
-import { handleErrorMessage } from "errors";
+import { handleErrorMessage } from "errors/utils";
 
 import Logo from "assets/logo.svg";
 

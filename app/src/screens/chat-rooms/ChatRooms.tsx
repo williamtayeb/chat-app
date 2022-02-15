@@ -5,6 +5,7 @@ import { ChatRoomsView } from "./ChatRoomsView";
 import { IChatRoom } from "models/types";
 import { getChatRooms } from "models/chatRoom";
 import { ChatRoomsNavigationProp } from "navigation";
+import { getErrorMessage } from "errors/utils";
 
 interface IChatRoomProps {
   navigation: ChatRoomsNavigationProp;
@@ -13,6 +14,7 @@ interface IChatRoomProps {
 export const ChatRooms: React.FC<IChatRoomProps> = ({ navigation }) => {
   const [rooms, setRooms] = useState<IChatRoom[]>();
   const [refreshing, setRefreshing] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>();
   
   useEffect(() => {
     SplashScreen.hide();
@@ -20,8 +22,13 @@ export const ChatRooms: React.FC<IChatRoomProps> = ({ navigation }) => {
   }, []);
 
   const retrieveChatRooms = async () => {
-    const chatRooms = await getChatRooms();
-    setRooms(chatRooms);
+    try {
+      const chatRooms = await getChatRooms();
+      setRooms(chatRooms);
+    } catch(err) {
+      const message = getErrorMessage(err);
+      setErrorMessage(message);
+    }
   }
 
   const handleChatRoomItemPress = (roomId: string) => {
@@ -35,12 +42,18 @@ export const ChatRooms: React.FC<IChatRoomProps> = ({ navigation }) => {
     setRefreshing(false);
   }, []);
 
+  const handleErrorAlertDismissPress = () => {
+    setErrorMessage(null);
+  }
+
   return (
     <ChatRoomsView
       rooms={rooms}
       onChatRoomItemPress={handleChatRoomItemPress}
       refreshing={refreshing}
       onRefresh={handleRefresh}
+      onErrorAlertDismissPress={handleErrorAlertDismissPress}
+      errorMessage={errorMessage}
     />
   );
 };

@@ -1,9 +1,9 @@
-import { getErrorMessage } from "errors";
 import React, { useEffect, useState } from "react";
 import SplashScreen from "react-native-splash-screen";
-import { loginWithFacebook, loginWithGoogle } from "services/auth";
 
 import { LoginView } from "./LoginView";
+import { getErrorMessage } from "errors/utils";
+import { loginWithFacebook, loginWithGoogle } from "services/auth";
 
 /**
  * Represents the login screen. This container is responsible
@@ -34,7 +34,7 @@ export const Login: React.FC = () => {
     }
   };
 
-  const handleErrorDismissPress = () => {
+  const handleErrorAlertDismissPress = () => {
     setErrorMessage(null);
   }
 
@@ -42,7 +42,7 @@ export const Login: React.FC = () => {
     <LoginView
       onFacebookLoginPress={handleFacebookPress}
       onGoogleLoginPress={handleGooglePress}
-      onErrorAlertDismissPress={handleErrorDismissPress}
+      onErrorAlertDismissPress={handleErrorAlertDismissPress}
       errorMessage={errorMessage}
     />
   );
