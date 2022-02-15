@@ -3,8 +3,8 @@ import SplashScreen from "react-native-splash-screen";
 
 import { ChatRoomsView } from "./ChatRoomsView";
 import { IChatRoom } from "models/types";
-import { getChatRooms } from "models/chatRoom";
-import { ChatRoomsNavigationProp } from "navigation";
+import { getChatRooms } from "models/chat-room";
+import { ChatRoomsNavigationProp } from "navigation/types";
 import { getErrorMessage } from "errors/utils";
 
 interface IChatRoomProps {

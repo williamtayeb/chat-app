@@ -2,8 +2,12 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 
 import { ChatRooms, Login, Room } from "screens";
-import { INavigatorProps } from "./INavigatorProps";
 import { Stack } from "./Stack";
+
+interface INavigatorProps {
+  linking: any;
+  displayLogin: boolean;
+}; 
 
 export const Navigator: React.FC<INavigatorProps> = ({
   linking,

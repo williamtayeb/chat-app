@@ -1,20 +1,25 @@
-import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+import firestore, { FirebaseFirestoreTypes as FirestoreTypes } from '@react-native-firebase/firestore';
+import { limits } from 'config';
 import { Collections } from 'services/firestore';
 import { IMessage } from './types';
 
 interface IResult {
   data: IMessage[],
-  lastVisible: FirebaseFirestoreTypes.QueryDocumentSnapshot<FirebaseFirestoreTypes.DocumentData>
+  lastVisible: FirestoreTypes.QueryDocumentSnapshot<FirestoreTypes.DocumentData>
 }
 
-export const getMessagesByRoomId = async (roomId: string): Promise<IResult> => {
-  const LIMIT = 50;
-
-  const querySnapshot = await firestore()
+export const getMessagesByRoomId = async (roomId: string, startAfter?: FirestoreTypes.QueryDocumentSnapshot<FirestoreTypes.DocumentData>): Promise<IResult> => {
+  let query = firestore()
     .collection(Collections.Messages)
     .where('roomId', '==', roomId)
-    .orderBy('createdAt', 'desc')
-    .limit(LIMIT)
+    .orderBy('createdAt', 'desc');
+
+  if (startAfter) {
+    query = query.startAfter(startAfter)
+  }
+
+  const querySnapshot = await query
+    .limit(limits.getMessagesByRoomId)
     .get();
 
   const data = querySnapshot

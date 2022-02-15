@@ -22,6 +22,8 @@ const seedChatRooms = async (total: number): Promise<string[]> => {
   const chatRoomIds: string[] = [];
 
   for (let i = 0; i < total; i++) {
+    console.log('Generating room: ', i);
+
     const chatRoom: INewChatRoom = {
       name: generateRandomChatRoomName(),
       description: faker.lorem.sentences(),
@@ -39,8 +41,14 @@ const seedChatRooms = async (total: number): Promise<string[]> => {
 }
 
 const seedMessages = async (chatRoomIds: string[], totalPerRoom: number): Promise<void> => {
+  let roomCounter = 0;
+
   for (const roomId of chatRoomIds) {
+    roomCounter++;
+
     for (let i = 0; i < totalPerRoom; i++) {
+      console.log(`[${roomCounter}/${chatRoomIds.length}] Generating message: `, i);
+
       const message: INewMessage = {
         uid: faker.datatype.uuid(),
         roomId,

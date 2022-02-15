@@ -10,7 +10,7 @@ import SendIcon from 'assets/icons/send.svg';
 interface IMessageInputProps {
   onUploadImagePress: () => any;
   onChangeText: (text: string) => any;
-  defaultValue: string;
+  defaultValue: string | undefined;
   onSendPress: () => any;
 }
 

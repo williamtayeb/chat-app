@@ -25,7 +25,7 @@ const App: React.FC = () => {
   useEffect(() => {
     // TODO remove this comment and the below statement
     //signOut();
-    seedRandomData(10, 150);
+    //seedRandomData(10, 150);
 
     // Listen for changes to auth state to check if user
     // is already logged in
