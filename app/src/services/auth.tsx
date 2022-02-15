@@ -2,6 +2,10 @@ import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { AccessToken, LoginManager } from "react-native-fbsdk-next";
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
+// Retrieve web client id used to configure google sign in
+// through .env file
+import { GOOGLE_WEB_CLIENT_ID } from 'react-native-dotenv';
+
 import { IUser } from 'models';
 
 export const onAuthStateChanged = (listener: (user: IUser | null) => void) => {
@@ -49,8 +53,9 @@ export const loginWithFacebook = async (): Promise<void> => {
 };
 
 export const loginWithGoogle = async (): Promise<void> => {
-  const webClientId = '790401372464-gbpg02j0ep7pjp7te8tbfk297sa88bf6.apps.googleusercontent.com';
-  GoogleSignin.configure({ webClientId });
+  GoogleSignin.configure({
+    webClientId: GOOGLE_WEB_CLIENT_ID
+  });
 
   // Get the users ID token
   const { idToken } = await GoogleSignin.signIn();

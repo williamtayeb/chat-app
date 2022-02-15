@@ -22,7 +22,9 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
-    // TODO remove this comment signOut();
+    // TODO remove this comment and the below statement
+    // signOut();
+
     // Listen for changes to auth state to check if user
     // is already logged in
     const unsubscribe = onAuthStateChanged(handleAuthStateChanged);

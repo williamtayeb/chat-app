@@ -4,7 +4,11 @@ import { loginWithFacebook, loginWithGoogle } from "services/auth";
 
 import { LoginView } from "./LoginView";
 
-export const Login = () => {
+/**
+ * Represents the login screen. This container is responsible
+ * for handling user interactions with the login view.
+ */
+export const Login: React.FC = () => {
   useEffect(() => {
     SplashScreen.hide();
   }, []);
