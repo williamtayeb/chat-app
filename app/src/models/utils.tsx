@@ -50,7 +50,7 @@ const seedMessages = async (chatRoomIds: string[], totalPerRoom: number) => {
       console.log(`[${roomCounter}/${chatRoomIds.length}] Generating message: `, i);
 
       const message: NewMessage = {
-        uid: faker.datatype.uuid(),
+        userId: faker.datatype.uuid(),
         roomId,
         author: `${faker.name.firstName()} ${faker.name.lastName()}`,
         avatarImageUrl: faker.image.avatar(),

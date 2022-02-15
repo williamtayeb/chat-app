@@ -1,12 +1,11 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import { LinkingOptions, NavigationContainer } from "@react-navigation/native";
 
 import { ChatRooms, Login, Room } from "screens";
-import { Stack } from "./Stack";
+import { Stack, StackParamList } from "./Stack";
 
-// TODO specify type for linking prop
 interface NavigatorProps {
-  linking: any;
+  linking: LinkingOptions<StackParamList>;
   displayLogin: boolean;
 }; 
 

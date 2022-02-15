@@ -44,7 +44,7 @@ export const getMessagesByRoomId = async (
 export const addMessage = async (message: NewMessage): Promise<Message> => {
   let newMessage = message;
 
-  if (!newMessage.uid) {
+  if (!newMessage.userId) {
     const user = getCurrentUser();
 
     if (!user.name) {
@@ -53,7 +53,7 @@ export const addMessage = async (message: NewMessage): Promise<Message> => {
 
     newMessage = {
       ...newMessage,
-      uid: user.id,
+      userId: user.id,
       author: user.name
     }
 

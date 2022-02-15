@@ -2,7 +2,7 @@ import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 
 export interface Message {
   id: string;
-  uid: string;
+  userId: string;
   roomId: string,
   author: string;
   avatarImageUrl: string;

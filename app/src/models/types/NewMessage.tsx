@@ -1,6 +1,6 @@
 export interface NewMessage {
   id?: string;
-  uid?: string;
+  userId?: string;
   roomId: string;
   author?: string;
   avatarImageUrl?: string;

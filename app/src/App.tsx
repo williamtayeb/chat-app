@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Navigator } from "navigation";
+import { Navigator, linking } from "navigation";
 import { User } from "models/types";
 import { onAuthStateChanged, signOut } from "services/auth";
 import { ThemeContext } from "context";
@@ -38,7 +38,7 @@ const App: React.FC = () => {
   // TODO provide linking
   return (
     <ThemeContext.Provider value={theme}>
-      <Navigator linking={null} displayLogin={displayLogin} />
+      <Navigator linking={linking} displayLogin={displayLogin} />
     </ThemeContext.Provider>
   );
 };
