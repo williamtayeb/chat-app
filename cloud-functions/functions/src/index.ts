@@ -5,9 +5,10 @@ import { Message } from "./models/types";
 import { Collections } from "./services/firestore";
 import { getPushNotificationTokens } from "./models/room-subscription";
 import { updateChatRoomTimestamp } from "./models/chat-room";
-import { sendPushNotifications } from "./services/messaging";
+import { sendMessagePushNotifications } from "./services/messaging";
 
-// Initialize the firebase admin SDK to access firestore
+// Initialize the firebase admin SDK which is required
+// in order to access firestore
 initializeApp();
 
 /**
@@ -20,10 +21,11 @@ export const handleNewMessage = functions
   .firestore
   .document(`${Collections.Messages}/{messageId}`)
   .onCreate(async (snap, context) => {
+    // Get the newly created message
     const newMessage = snap.data() as Message;
 
     await updateChatRoomTimestamp(newMessage.roomId);
 
     const tokens = await getPushNotificationTokens(newMessage.roomId);
-    await sendPushNotifications(tokens, newMessage);
+    await sendMessagePushNotifications(tokens, newMessage);
   });
