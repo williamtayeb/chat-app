@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import SplashScreen from "react-native-splash-screen";
-import firestore, { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 
 import { ChatRoomsView } from "./ChatRoomsView";
-import { IChatRoom } from "models";
+import { IChatRoom } from "models/types";
+import { getChatRooms } from "models/chatRoom";
+import { ChatRoomsNavigationProp } from "navigation";
 
 interface IChatRoomProps {
-  navigation: any;
+  navigation: ChatRoomsNavigationProp;
 }
 
 export const ChatRooms: React.FC<IChatRoomProps> = ({ navigation }) => {
@@ -15,25 +16,24 @@ export const ChatRooms: React.FC<IChatRoomProps> = ({ navigation }) => {
   
   useEffect(() => {
     SplashScreen.hide();
-
-    setRooms([
-      {
-        id: 'test',
-        name: 'test',
-        description: 'test',
-        updatedAt: firestore.Timestamp.now()
-      },
-      {
-        id: 'test2',
-        name: 'test2',
-        description: 'test2',
-        updatedAt: firestore.Timestamp.now()
-      }
-    ]);
+    retrieveChatRooms();
   }, []);
 
-  const handleChatRoomItemPress = () => {};
-  const handleRefresh = () => {};
+  const retrieveChatRooms = async () => {
+    const chatRooms = await getChatRooms();
+    setRooms(chatRooms);
+  }
+
+  const handleChatRoomItemPress = (roomId: string) => {
+    navigation.navigate('Room', { roomId });
+  };
+
+  const handleRefresh = useCallback(async () => {
+    setRefreshing(true);
+    await retrieveChatRooms();
+
+    setRefreshing(false);
+  }, []);
 
   return (
     <ChatRoomsView

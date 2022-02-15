@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
  * param names and types. 'undefined' means that a screen
  * does not have any params.
  */
-type StackParamList = {
+export type StackParamList = {
   Login: undefined;
   ChatRooms: undefined;
   Room: { roomId: string };

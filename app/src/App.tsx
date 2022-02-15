@@ -5,6 +5,7 @@ import { IUser } from "models";
 import { onAuthStateChanged, signOut } from "services/auth";
 import { ThemeContext } from "context";
 import { theme } from "styles";
+import { seedRandomData } from "models/utils";
 
 /**
  * This component represents the entry point for the app
@@ -24,6 +25,7 @@ const App: React.FC = () => {
   useEffect(() => {
     // TODO remove this comment and the below statement
     //signOut();
+    //seedRandomData(10);
 
     // Listen for changes to auth state to check if user
     // is already logged in
