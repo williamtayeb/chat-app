@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { Alert } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { RouteProp, useNavigationState } from '@react-navigation/native';
 import { FirebaseFirestoreTypes as FirestoreTypes } from '@react-native-firebase/firestore';
 
 import { RoomView } from "./RoomView";
-import { IMessage, INewMessage } from "models/types";
-import { addImageMessage, addMessage, addTextMessage, getMessagesByRoomId } from "models/message";
+import { IMessage } from "models/types";
+import { addImageMessage, addTextMessage, getMessagesByRoomId } from "models/message";
 import { getErrorMessage } from "errors/utils";
 import { RoomNavigationProp } from "navigation/types";
 import { getImageFromCamera, getImageFromGallery } from "services/image-picker";
 import { IImage, uploadImage } from "services/storage";
+import { requestPushNotificationPermission } from "services/messaging";
+import { addRoomSubscription, checkUserRoomSubscriptionExists } from "models/room-subscription";
 
 interface IRoomProps {
   route: RouteProp<{ params: { roomId: string }}, 'params'>,
@@ -32,9 +35,21 @@ export const Room: React.FC<IRoomProps> = ({ route, navigation }) => {
     setDisplayImageUploadOptions
   ] = useState<boolean>(false);
 
+  const [
+    askForPushNotifications,
+    setAskForPushNotifications
+  ] = useState<boolean>(false);
+
+  const [
+    displayPushNotificationAlert,
+    setDisplayPushNotificationAlert
+  ] = useState<boolean>(false);
+
   useEffect(() => {
     SplashScreen.hide();
+
     retrieveMessages();
+    checkRoomSubscriptionStatus();
   }, [roomId]);
 
   const retrieveMessages = async (): Promise<void> => {
@@ -133,10 +148,10 @@ export const Room: React.FC<IRoomProps> = ({ route, navigation }) => {
       setMessages([newMessage, ...messages])
       setInputValue('');
 
-      /*if (askForPushNotifications) {
+      if (askForPushNotifications) {
         setAskForPushNotifications(false);
         setDisplayPushNotificationAlert(true);
-      }*/
+      }
     } catch(err) {
       const message = getErrorMessage(err);
       setErrorMessage(message);
@@ -145,6 +160,68 @@ export const Room: React.FC<IRoomProps> = ({ route, navigation }) => {
 
   const dismissError = (): void => {
     setErrorMessage(null);
+  }
+
+  const enablePushNotifications = async (): Promise<void> => {
+    setDisplayPushNotificationAlert(false);
+
+    try {
+      const hasPermission = await requestPushNotificationPermission();
+      if (!hasPermission) {
+        await disablePushNotifications();
+        return;
+      }
+
+      await addRoomSubscription({ roomId, enabled: true });
+    } catch(err) {
+      const message = getErrorMessage(err);
+      setErrorMessage(message);
+    }
+  }
+
+  const disablePushNotifications = async (): Promise<void> => {
+    setDisplayPushNotificationAlert(false);
+
+    try {
+      await addRoomSubscription({ roomId, enabled: false });
+    } catch(err) {
+      const message = getErrorMessage(err);
+      setErrorMessage(message);
+    }
+  }
+
+  const checkRoomSubscriptionStatus = async (): Promise<void> => {
+    try {
+      const exists = await checkUserRoomSubscriptionExists(roomId);
+
+      if (!exists) {
+        setAskForPushNotifications(true);
+        return;
+      }
+
+      setAskForPushNotifications(false);
+    } catch(err) {
+      const message = getErrorMessage(err);
+      setErrorMessage(message);
+    }
+  };
+
+  if (displayPushNotificationAlert) {
+    Alert.alert(
+      "Push Notifications",
+      "Would you like to receive push notifications from this chat room?",
+      [
+        {
+          text: 'Decline',
+          onPress: disablePushNotifications,
+          style: 'cancel'
+        },
+        {
+          text: 'Accept',
+          onPress: enablePushNotifications
+        }
+      ]
+    );
   }
 
   return (

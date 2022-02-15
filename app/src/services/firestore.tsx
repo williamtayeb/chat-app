@@ -1,4 +1,5 @@
 export enum Collections {
   ChatRooms = 'chatRooms',
-  Messages = 'messages'
+  Messages = 'messages',
+  RoomSubscriptions = 'roomSubscriptions'
 }
