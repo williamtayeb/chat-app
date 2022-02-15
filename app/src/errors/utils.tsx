@@ -19,7 +19,7 @@ export const getErrorMessage = (error: unknown) => {
  * handling press of the dismiss button
  */
 export const handleErrorMessage = (
-  errorMessage: string | null,
+  errorMessage: string | null | undefined,
   onErrorAlertDismissPress: () => any
 ) => {
   const title = 'Error';

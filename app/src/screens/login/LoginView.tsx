@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
-import { Alert, StatusBar, StyleSheet, Text, View } from "react-native";
+import { StatusBar, StyleSheet, View } from "react-native";
 
-import Logo from "assets/logo.svg";
 import { ITheme } from "styles";
 import { ThemeContext } from "context";
-import { Button } from "./components";
-import { ButtonOutline } from "./components/ButtonOutline";
+import { Button, ButtonOutline } from "./components";
 import { handleErrorMessage } from "errors";
+
+import Logo from "assets/logo.svg";
 
 interface ILoginViewProps {
   onFacebookLoginPress: () => any;
   onGoogleLoginPress: () => any;
   onErrorAlertDismissPress: () => any;
-  errorMessage: string;
+  errorMessage: string | null | undefined;
 }
 
 /**
@@ -22,6 +22,10 @@ interface ILoginViewProps {
  * facebook login button has been pressed.
  * @param onGoogleLoginPress Callback for handling when the
  * google login button has been pressed.
+ * @param onErrorAlertDismiss Callback function for handling
+ * when the dismiss button on the error alert has been pressed.
+ * @param errorMessage A string that contains a possible error
+ * message.
  */
 export const LoginView: React.FC<ILoginViewProps> = ({
   onFacebookLoginPress,

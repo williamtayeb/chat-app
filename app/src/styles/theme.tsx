@@ -3,7 +3,8 @@ import { ITheme } from "./ITheme";
 
 const text = {
   fontFamily: 'Montserrat',
-  fontSize: 14
+  fontSize: 14,
+  color: colors.text
 };
 
 export const theme: ITheme = {
