@@ -1,12 +1,12 @@
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import { AccessToken, LoginManager } from "react-native-fbsdk-next";
-import { GoogleSignin } from '@react-native-google-signin/google-signin';
+import { GoogleSignin } from "@react-native-google-signin/google-signin";
 
 // Retrieve web client id used to configure google sign in
 // through .env file
-import { GOOGLE_WEB_CLIENT_ID } from 'react-native-dotenv';
+import { GOOGLE_WEB_CLIENT_ID } from "react-native-dotenv";
 
-import { IUser } from 'models';
+import { IUser } from "models/types";
 
 /**
  * Listen for changes in user auth state
@@ -75,4 +75,18 @@ export const loginWithGoogle = async (): Promise<void> => {
 
 export const signOut = async (): Promise<void> => {
   await auth().signOut();
+}
+
+export const getCurrentUser = (): IUser => {
+  const user = auth().currentUser;
+
+  if (!user) {
+    throw new Error("The current user state is invalid");
+  }
+
+  return {
+    userId: user.uid,
+    name: user.displayName,
+    avatarImageUrl: user.photoURL
+  }
 }

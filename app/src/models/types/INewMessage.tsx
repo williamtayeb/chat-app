@@ -1,11 +1,11 @@
 export interface INewMessage {
   id?: string;
-  uid: string;
+  uid?: string;
   roomId: string;
-  author: string;
-  avatarImageUrl: string;
+  author?: string;
+  avatarImageUrl?: string;
   content?: string;
   imageUrl?: string;
-  createdAt: Date;
+  createdAt?: Date;
   type: 'text' | 'image';
 }

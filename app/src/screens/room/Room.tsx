@@ -4,10 +4,12 @@ import { RouteProp, useNavigationState } from '@react-navigation/native';
 import { FirebaseFirestoreTypes as FirestoreTypes } from '@react-native-firebase/firestore';
 
 import { RoomView } from "./RoomView";
-import { IMessage } from "models/types";
-import { getMessagesByRoomId } from "models/message";
+import { IMessage, INewMessage } from "models/types";
+import { addImageMessage, addMessage, getMessagesByRoomId } from "models/message";
 import { getErrorMessage } from "errors/utils";
 import { RoomNavigationProp } from "navigation/types";
+import { getImageFromCamera, getImageFromGallery } from "services/image-picker";
+import { IImage, uploadImage } from "services/storage";
 
 interface IRoomProps {
   route: RouteProp<{ params: { roomId: string }}, 'params'>,
@@ -72,8 +74,47 @@ export const Room: React.FC<IRoomProps> = ({ route, navigation }) => {
     }
   }
 
-  const handleCameraPress = (): void => {}
-  const handleGalleryPress = (): void => {}
+  const handleCameraPress = async (): Promise<void> => {
+    setDisplayImageUploadOptions(false);
+
+    try {
+      const image = await getImageFromCamera();
+      if (!image) return;
+
+      await processImage(image);
+    } catch(err) {
+      const message = getErrorMessage(err);
+      setErrorMessage(message);
+    }
+  }
+
+  const handleGalleryPress = async (): Promise<void> => {
+    setDisplayImageUploadOptions(false);
+
+    try {
+      const image = await getImageFromGallery();
+      if (!image) return;
+
+      await processImage(image);
+    } catch(err) {
+      const message = getErrorMessage(err);
+      setErrorMessage(message);
+    }
+  }
+
+  /**
+   * Upload the image to storage and store related data.
+   * Finally update the state to with the new image message.
+   * @param image The image to process
+   */
+  const processImage = async (image: IImage) => {
+    const imageUrl = await uploadImage(image);
+    const newMessage = await addImageMessage(roomId, imageUrl);
+
+    // Append the new message in front of all of the other
+    // messages.
+    setMessages([newMessage, ...messages])
+  }
 
   const handleUploadImagePress = (): void => {
     setDisplayImageUploadOptions(!displayImageUploadOptions);

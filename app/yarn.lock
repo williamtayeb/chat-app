@@ -1299,6 +1299,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-firebase/firestore/-/firestore-14.4.0.tgz#c259b79345ef0d2457536b8139e26044a6901b81"
   integrity sha512-xmvkJzwA1JYlIJCGCIBEDAkJPNBJWBRDj3OeN6gfx83U7ikN8/lrV13rUyvKZEmI2FBxtt0Jpiydrc5ByWyVng==
 
+"@react-native-firebase/storage@^14.4.0":
+  version "14.4.0"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/storage/-/storage-14.4.0.tgz#cc59bafb45a4371a227f8ee505759a1ef6761f06"
+  integrity sha512-np2KmsuIy+vCF/hrELfdfNenzcZTmWRGYP2ykxGYMR3ev6g0obvougbegKyzloy72BJQjLrE8itUp3JKqdj3wQ==
+
 "@react-native-google-signin/google-signin@^7.0.4":
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/@react-native-google-signin/google-signin/-/google-signin-7.0.4.tgz#b557be28dac0af8fd020010b8a9670ae65bedba8"
@@ -6088,6 +6093,11 @@ react-native-fbsdk-next@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/react-native-fbsdk-next/-/react-native-fbsdk-next-7.0.1.tgz#ebd5b540e9003831c332d9f718c3b0dee31e3313"
   integrity sha512-pMOIP0HTgz2EjliGQB15SH87I3PaCXRUCWf4XAv4qb+8h/t6fRaZMf4WEEgPAWjzfYQh0eO1qZZu2qjlZKi8ag==
+
+react-native-image-picker@^4.7.3:
+  version "4.7.3"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.7.3.tgz#f5863b27bf2e76c83649dd8efea4598426bd04e8"
+  integrity sha512-eRKm4wlsmZHmsWFyv77kYc2F+ZyEVqe0m7mqhsMzWk6TQT4FBDtEDxmRDDFq+ivCu/1QD+EPhmYcAIpeGr7Ekg==
 
 react-native-safe-area-context@^3.3.2:
   version "3.3.2"
