@@ -2,15 +2,15 @@ import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { ThemeContext } from "context";
-import { ITheme } from "styles";
+import { Theme } from "styles/types";
 
 import ChevronLeftIcon from 'assets/icons/chevron-left.svg';
 
-interface IHeaderProps {
+interface HeaderProps {
   onBackPress: () => any;
 }
 
-export const Header: React.FC<IHeaderProps> = ({ onBackPress }) => {
+export const Header: React.FC<HeaderProps> = ({ onBackPress }) => {
   const theme = useContext(ThemeContext);
   const styles = buildStyleSheet(theme);
 
@@ -31,7 +31,7 @@ export const Header: React.FC<IHeaderProps> = ({ onBackPress }) => {
   );
 };
 
-const buildStyleSheet = (theme: ITheme) => StyleSheet.create({
+const buildStyleSheet = (theme: Theme) => StyleSheet.create({
   container: {
     backgroundColor: theme.colors.dark,
     flexDirection: 'row',

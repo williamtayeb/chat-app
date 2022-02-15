@@ -2,10 +2,10 @@ import firestore from '@react-native-firebase/firestore';
 import { getCurrentUser } from 'services/auth';
 import { Collections } from 'services/firestore';
 import { getPushNotificationToken } from 'services/messaging';
-import { INewRoomSubscription } from "./types"
+import { NewRoomSubscription } from "./types"
 
 export const addRoomSubscription = async (
-  roomSubscription: INewRoomSubscription
+  roomSubscription: NewRoomSubscription
 ) => {
   let newRoomSubscription = roomSubscription;
 
@@ -14,7 +14,7 @@ export const addRoomSubscription = async (
 
     newRoomSubscription = {
       ...newRoomSubscription,
-      userId: user.userId
+      userId: user.id
     };
   }
 
@@ -38,7 +38,7 @@ export const checkUserRoomSubscriptionExists = async (roomId: string): Promise<b
   const querySnapshot = await firestore()
     .collection(Collections.RoomSubscriptions)
     .where('roomId', '==', roomId)
-    .where('userId', '==', user.userId)
+    .where('userId', '==', user.id)
     .get();
   
   return !querySnapshot.empty;

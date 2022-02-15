@@ -2,7 +2,7 @@ import firestore from '@react-native-firebase/firestore';
 const { faker } = require('@faker-js/faker');
 
 import { Collections } from 'services/firestore';
-import { INewChatRoom, INewMessage } from './types';
+import { NewChatRoom, NewMessage } from './types';
 
 /**
  * Seed the database with random data
@@ -24,7 +24,7 @@ const seedChatRooms = async (total: number): Promise<string[]> => {
   for (let i = 0; i < total; i++) {
     console.log('Generating room: ', i);
 
-    const chatRoom: INewChatRoom = {
+    const chatRoom: NewChatRoom = {
       name: generateRandomChatRoomName(),
       description: faker.lorem.sentences(),
       updatedAt: faker.date.past()
@@ -40,7 +40,7 @@ const seedChatRooms = async (total: number): Promise<string[]> => {
   return chatRoomIds;
 }
 
-const seedMessages = async (chatRoomIds: string[], totalPerRoom: number): Promise<void> => {
+const seedMessages = async (chatRoomIds: string[], totalPerRoom: number) => {
   let roomCounter = 0;
 
   for (const roomId of chatRoomIds) {
@@ -49,7 +49,7 @@ const seedMessages = async (chatRoomIds: string[], totalPerRoom: number): Promis
     for (let i = 0; i < totalPerRoom; i++) {
       console.log(`[${roomCounter}/${chatRoomIds.length}] Generating message: `, i);
 
-      const message: INewMessage = {
+      const message: NewMessage = {
         uid: faker.datatype.uuid(),
         roomId,
         author: `${faker.name.firstName()} ${faker.name.lastName()}`,

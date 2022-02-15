@@ -1,4 +1,4 @@
-import messaging, { FirebaseMessagingTypes as MessagingTypes } from '@react-native-firebase/messaging';
+import messaging from '@react-native-firebase/messaging';
 
 export const requestPushNotificationPermission = async (): Promise<boolean> => {
   const authStatus = await messaging().requestPermission();

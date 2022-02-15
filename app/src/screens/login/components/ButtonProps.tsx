@@ -1,4 +1,4 @@
-export interface IButtonProps {
+export interface ButtonProps {
   onPress: () => any;
   label: string;
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
 import { Navigator } from "navigation";
-import { IUser } from "models/types";
+import { User } from "models/types";
 import { onAuthStateChanged, signOut } from "services/auth";
 import { ThemeContext } from "context";
 import { theme } from "styles";
@@ -14,7 +14,7 @@ const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [displayLogin, setDisplayLogin] = useState<boolean>(true);
 
-  const handleAuthStateChanged = (user: IUser | null): void => {
+  const handleAuthStateChanged = (user: User | null): void => {
     // If the user state is null then the user has not
     // logged in yet so therefore we should display the 
     // login screen.
@@ -25,7 +25,6 @@ const App: React.FC = () => {
   useEffect(() => {
     // TODO remove this comment and the below statement
     //signOut();
-    //seedRandomData(10, 150);
 
     // Listen for changes to auth state to check if user
     // is already logged in

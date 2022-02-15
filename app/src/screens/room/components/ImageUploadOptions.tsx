@@ -2,14 +2,14 @@ import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { ThemeContext } from "context";
-import { ITheme } from "styles";
+import { Theme } from "styles/types";
 
-interface IImageUploadOptionsProps {
+interface ImageUploadOptionsProps {
   onCameraPress: () => null;
   onGalleryPress: () => null;
 }
 
-export const ImageUploadOptions: React.FC<IImageUploadOptionsProps> = ({
+export const ImageUploadOptions: React.FC<ImageUploadOptionsProps> = ({
   onCameraPress,
   onGalleryPress
 }) => {
@@ -41,7 +41,7 @@ export const ImageUploadOptions: React.FC<IImageUploadOptionsProps> = ({
   );
 };
 
-const buildStyleSheet = (theme: ITheme) => StyleSheet.create({
+const buildStyleSheet = (theme: Theme) => StyleSheet.create({
   container: {
     backgroundColor: theme.colors.primary,
     flexDirection: 'row'

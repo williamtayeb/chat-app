@@ -2,13 +2,14 @@ import React, { useContext } from "react";
 import { FlatList, StatusBar, StyleSheet, View } from "react-native";
 
 import { ThemeContext } from "context";
-import { ITheme } from "styles";
+import { Theme } from "styles/types";
 import { handleErrorMessage } from "errors/utils";
 import { Header, ImageUploadOptions, MessageInput, MessageItem } from "./components";
-import { IMessage } from "models/types";
+import { Message } from "models/types";
+import { ErrorProp } from "errors";
 
-interface IRoomViewProps {
-  messages: IMessage[];
+interface RoomViewProps {
+  messages: Message[];
   onBackPress: () => any;
   onEndReached: () => any;
   imageUploadOptions: {
@@ -22,13 +23,10 @@ interface IRoomViewProps {
     defaultValue: string | undefined;
     onSendPress: () => any;
   }
-  error: {
-    onDismissPress: () => any;
-    message: string | null | undefined;
-  }
+  error: ErrorProp;
 }
 
-export const RoomView: React.FC<IRoomViewProps> = ({
+export const RoomView: React.FC<RoomViewProps> = ({
   messages,
   onBackPress,
   onEndReached,
@@ -82,7 +80,7 @@ export const RoomView: React.FC<IRoomViewProps> = ({
   );
 };
 
-const buildStyleSheet = (theme: ITheme) => StyleSheet.create({
+const buildStyleSheet = (theme: Theme) => StyleSheet.create({
   messagesContainer: {
     flex: 1,
     backgroundColor: theme.colors.light

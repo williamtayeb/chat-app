@@ -2,29 +2,28 @@ import React, { useContext } from "react";
 import { FlatList, RefreshControl, StatusBar, View } from "react-native";
 
 import { ThemeContext } from "context";
-import { IChatRoom } from "models/types";
+import { ChatRoom } from "models/types";
 import { ChatRoomItem, Header } from "./components";
 import { handleErrorMessage } from "errors/utils";
+import { ErrorProp } from "errors";
 
-interface IChatRoomsViewProps {
-  rooms: IChatRoom[] | undefined,
+interface ChatRoomsViewProps {
+  rooms: ChatRoom[] | undefined,
   onChatRoomItemPress: (roomId: string) => any;
   refreshing: boolean,
   onRefresh: () => any;
-  onErrorAlertDismissPress: () => any;
-  errorMessage: string | null | undefined;
+  error: ErrorProp;
 }
 
-export const ChatRoomsView: React.FC<IChatRoomsViewProps> = ({
+export const ChatRoomsView: React.FC<ChatRoomsViewProps> = ({
   rooms,
   onChatRoomItemPress,
   refreshing,
   onRefresh,
-  onErrorAlertDismissPress,
-  errorMessage
+  error
 }) => {
   const theme = useContext(ThemeContext);
-  handleErrorMessage(errorMessage, onErrorAlertDismissPress);
+  handleErrorMessage(error.message, error.onDismissPress);
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.black }}>

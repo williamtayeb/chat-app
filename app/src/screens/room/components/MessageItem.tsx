@@ -4,9 +4,9 @@ import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 import { format } from 'date-fns';
 
 import { ThemeContext } from 'context';
-import { ITheme } from 'styles';
+import { Theme } from 'styles/types';
 
-interface IMessageItemProps {
+interface MessageItemProps {
   author: string;
   avatarImageUrl: string;
   content: string;
@@ -15,7 +15,7 @@ interface IMessageItemProps {
   type: 'text' | 'image';
 };
 
-export const MessageItem: React.FC<IMessageItemProps> = ({
+export const MessageItem: React.FC<MessageItemProps> = ({
   author,
   avatarImageUrl,
   content,
@@ -69,7 +69,7 @@ export const MessageItem: React.FC<IMessageItemProps> = ({
   );
 };
 
-const buildStyleSheet = (theme: ITheme) => StyleSheet.create({
+const buildStyleSheet = (theme: Theme) => StyleSheet.create({
   container: {
     borderTopWidth: 1,
     borderColor: theme.colors.dark,

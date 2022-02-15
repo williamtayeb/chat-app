@@ -1,5 +1,5 @@
-export interface IUser {
-    userId: string;
+export interface User {
+    id: string;
     name?: string | null;
     avatarImageUrl?: string | null;
 }

@@ -2,11 +2,11 @@ import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 import { ThemeContext } from "context";
-import { ITheme } from "styles";
+import { Theme } from "styles/types";
 
 import ChevronRightIcon from 'assets/icons/chevron-right.svg';
 
-interface IChatRoomItemProps {
+interface ChatRoomItemProps {
   id: string;
   name: string;
   description: string;
@@ -23,7 +23,7 @@ interface IChatRoomItemProps {
  * @param onPress Callback function to handle when the item
  * has been pressed.
  */
-export const ChatRoomItem: React.FC<IChatRoomItemProps> = ({
+export const ChatRoomItem: React.FC<ChatRoomItemProps> = ({
   id,
   name,
   description,
@@ -57,7 +57,7 @@ export const ChatRoomItem: React.FC<IChatRoomItemProps> = ({
   );
 };
 
-const buildStyleSheet = (theme: ITheme) => StyleSheet.create({
+const buildStyleSheet = (theme: Theme) => StyleSheet.create({
   container: {
     borderBottomWidth: 1,
     borderColor: theme.colors.light

@@ -2,19 +2,19 @@ import React, { useContext } from "react";
 import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 
 import { ThemeContext } from "context";
-import { ITheme } from "styles";
+import { Theme } from "styles/types";
 
 import ImageIcon from 'assets/icons/image.svg';
 import SendIcon from 'assets/icons/send.svg';
 
-interface IMessageInputProps {
+interface MessageInputProps {
   onUploadImagePress: () => any;
   onChangeText: (text: string) => any;
   defaultValue: string | undefined;
   onSendPress: () => any;
 }
 
-export const MessageInput: React.FC<IMessageInputProps> = ({
+export const MessageInput: React.FC<MessageInputProps> = ({
   onUploadImagePress,
   onChangeText,
   defaultValue,
@@ -51,7 +51,7 @@ export const MessageInput: React.FC<IMessageInputProps> = ({
   );
 };
 
-const buildStyleSheet = (theme: ITheme) => StyleSheet.create({
+const buildStyleSheet = (theme: Theme) => StyleSheet.create({
   container: {
     backgroundColor: theme.colors.dark,
     flexDirection: 'row'

@@ -1,6 +1,6 @@
 import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
 
-export interface IMessage {
+export interface Message {
   id: string;
   uid: string;
   roomId: string,

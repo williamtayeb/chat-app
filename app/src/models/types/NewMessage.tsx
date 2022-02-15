@@ -1,4 +1,4 @@
-export interface INewMessage {
+export interface NewMessage {
   id?: string;
   uid?: string;
   roomId: string;

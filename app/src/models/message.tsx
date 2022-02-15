@@ -2,14 +2,17 @@ import firestore, { FirebaseFirestoreTypes as FirestoreTypes } from '@react-nati
 import { limits } from 'config';
 import { getCurrentUser } from 'services/auth';
 import { Collections } from 'services/firestore';
-import { IMessage, INewMessage } from './types';
+import { Message, NewMessage } from './types';
 
-interface IResult {
-  data: IMessage[],
+interface Result {
+  data: Message[],
   lastVisible: FirestoreTypes.QueryDocumentSnapshot<FirestoreTypes.DocumentData>
 }
 
-export const getMessagesByRoomId = async (roomId: string, startAfter?: FirestoreTypes.QueryDocumentSnapshot<FirestoreTypes.DocumentData>): Promise<IResult> => {
+export const getMessagesByRoomId = async (
+  roomId: string,
+  startAfter?: FirestoreTypes.QueryDocumentSnapshot<FirestoreTypes.DocumentData>
+): Promise<Result> => {
   let query = firestore()
     .collection(Collections.Messages)
     .where('roomId', '==', roomId)
@@ -26,7 +29,7 @@ export const getMessagesByRoomId = async (roomId: string, startAfter?: Firestore
   const data = querySnapshot
     .docs
     .map(doc => ({
-      ...doc.data() as IMessage,
+      ...doc.data() as Message,
       id: doc.id
     }));
 
@@ -38,7 +41,7 @@ export const getMessagesByRoomId = async (roomId: string, startAfter?: Firestore
   };
 };
 
-export const addMessage = async (message: INewMessage): Promise<IMessage> => {
+export const addMessage = async (message: NewMessage): Promise<Message> => {
   let newMessage = message;
 
   if (!newMessage.uid) {
@@ -50,7 +53,7 @@ export const addMessage = async (message: INewMessage): Promise<IMessage> => {
 
     newMessage = {
       ...newMessage,
-      uid: user.userId,
+      uid: user.id,
       author: user.name
     }
 
@@ -86,18 +89,18 @@ export const addMessage = async (message: INewMessage): Promise<IMessage> => {
   // Retrieve the newly created message data and
   // process it.
   const querySnapshot = await result.get();
-  const data: IMessage = {
-    ...querySnapshot.data() as IMessage,
+  const data: Message = {
+    ...querySnapshot.data() as Message,
     id: result.id
   };
 
   return data;
 }
 
-export const addImageMessage = async (roomId: string, imageUrl: string): Promise<IMessage> => {
+export const addImageMessage = async (roomId: string, imageUrl: string): Promise<Message> => {
   return addMessage({ roomId, imageUrl, type: 'image' });
 }
 
-export const addTextMessage = async (roomId: string, content: string): Promise<IMessage> => {
+export const addTextMessage = async (roomId: string, content: string): Promise<Message> => {
   return addMessage({ roomId, content, type: 'text' });
 }

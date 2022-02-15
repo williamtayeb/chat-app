@@ -42,8 +42,10 @@ export const Login: React.FC = () => {
     <LoginView
       onFacebookLoginPress={handleFacebookPress}
       onGoogleLoginPress={handleGooglePress}
-      onErrorAlertDismissPress={handleErrorAlertDismissPress}
-      errorMessage={errorMessage}
+      error={{
+        onDismissPress: handleErrorAlertDismissPress,
+        message: errorMessage
+      }}
     />
   );
 };

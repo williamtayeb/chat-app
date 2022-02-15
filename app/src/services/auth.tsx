@@ -6,7 +6,7 @@ import { GoogleSignin } from "@react-native-google-signin/google-signin";
 // through .env file
 import { GOOGLE_WEB_CLIENT_ID } from "react-native-dotenv";
 
-import { IUser } from "models/types";
+import { User } from "models/types";
 
 /**
  * Listen for changes in user auth state
@@ -14,15 +14,15 @@ import { IUser } from "models/types";
  * auth state changes
  * @returns An unsubscribe function to stop listening
  */
-export const onAuthStateChanged = (listener: (user: IUser | null) => void) => {
-    const handleFirebaseAuthStateChanged = (firebaseUser: FirebaseAuthTypes.User | null): void => {
+export const onAuthStateChanged = (listener: (user: User | null) => void) => {
+    const handleFirebaseAuthStateChanged = (firebaseUser: FirebaseAuthTypes.User | null) => {
         if (!firebaseUser) {
             listener(null);
             return;
         }
 
-        const user: IUser = {
-            userId: firebaseUser.uid,
+        const user: User = {
+            id: firebaseUser.uid,
             name: firebaseUser.displayName,
             avatarImageUrl: firebaseUser.photoURL
         };
@@ -34,7 +34,7 @@ export const onAuthStateChanged = (listener: (user: IUser | null) => void) => {
     return unsubscribe;
 };
 
-export const loginWithFacebook = async (): Promise<void> => {
+export const loginWithFacebook = async () => {
   const permissions = ['public_profile', 'email'];
 
   // Attempt login with permissions
@@ -58,7 +58,7 @@ export const loginWithFacebook = async (): Promise<void> => {
   await auth().signInWithCredential(facebookCredential);
 };
 
-export const loginWithGoogle = async (): Promise<void> => {
+export const loginWithGoogle = async () => {
   GoogleSignin.configure({
     webClientId: GOOGLE_WEB_CLIENT_ID
   });
@@ -77,7 +77,7 @@ export const signOut = async (): Promise<void> => {
   await auth().signOut();
 }
 
-export const getCurrentUser = (): IUser => {
+export const getCurrentUser = (): User => {
   const user = auth().currentUser;
 
   if (!user) {
@@ -85,7 +85,7 @@ export const getCurrentUser = (): IUser => {
   }
 
   return {
-    userId: user.uid,
+    id: user.uid,
     name: user.displayName,
     avatarImageUrl: user.photoURL
   }

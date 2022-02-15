@@ -1,7 +1,7 @@
 import { CameraOptions, ImagePickerResponse, launchCamera, launchImageLibrary } from "react-native-image-picker";
-import { IImage } from "./storage";
+import { StorageImage } from "./storage";
 
-export const getImageFromCamera = async (): Promise<IImage | null> => {
+export const getImageFromCamera = async (): Promise<StorageImage | null> => {
   const options: CameraOptions = {
     mediaType: 'photo',
     cameraType: 'back'
@@ -11,12 +11,12 @@ export const getImageFromCamera = async (): Promise<IImage | null> => {
   return processResult(result);
 };
 
-export const getImageFromGallery = async (): Promise<IImage | null> => {
+export const getImageFromGallery = async (): Promise<StorageImage | null> => {
   const result = await launchImageLibrary({ mediaType: 'photo' });
   return processResult(result);
 }
 
-const processResult = (result: ImagePickerResponse): IImage | null => {
+const processResult = (result: ImagePickerResponse): StorageImage | null => {
   // If the user did not select any images then simply
   // return null
   if (!result.assets) return null;

@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 
 import { ThemeContext } from "context";
-import { ITheme } from "styles";
+import { Theme } from "styles/types";
 
 export const Header: React.FC = () => {
   const theme = useContext(ThemeContext);
@@ -17,7 +17,7 @@ export const Header: React.FC = () => {
   );
 };
 
-const buildStyleSheet = (theme: ITheme) => StyleSheet.create({
+const buildStyleSheet = (theme: Theme) => StyleSheet.create({
   container: {
     alignItems: 'center',
     paddingTop: 80,

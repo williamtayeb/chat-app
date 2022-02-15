@@ -1,4 +1,4 @@
-export interface INewChatRoom {
+export interface NewChatRoom {
   id?: string;
   name: string;
   description: string;

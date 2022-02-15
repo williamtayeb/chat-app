@@ -1,16 +1,16 @@
 import React, { useContext } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-import { ITheme } from "styles";
+import { Theme } from "styles/types";
 import { ThemeContext } from "context";
-import { IButtonProps } from "./IButtonProps";
+import { ButtonProps } from "./ButtonProps";
 
 /**
  * Represents a filled button
  * @param onPress Callback for handling button press
  * @param label The text to display in the middle of the button
  */
-export const Button: React.FC<IButtonProps> = ({
+export const Button: React.FC<ButtonProps> = ({
   onPress,
   label
 }) => {
@@ -28,7 +28,7 @@ export const Button: React.FC<IButtonProps> = ({
   );
 };
 
-const buildStyleSheet = (theme: ITheme) => StyleSheet.create({
+const buildStyleSheet = (theme: Theme) => StyleSheet.create({
   buttonContainer: {
     alignItems: 'center',
     borderRadius: 4,

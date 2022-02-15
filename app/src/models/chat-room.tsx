@@ -2,9 +2,9 @@ import firestore from '@react-native-firebase/firestore';
 
 import { limits } from 'config';
 import { Collections } from 'services/firestore';
-import { IChatRoom } from './types';
+import { ChatRoom } from './types';
 
-export const getChatRooms = async (): Promise<IChatRoom[]> => {
+export const getChatRooms = async (): Promise<ChatRoom[]> => {
   const querySnapshot = await firestore()
     .collection(Collections.ChatRooms)
     .orderBy('updatedAt', 'desc')
@@ -14,7 +14,7 @@ export const getChatRooms = async (): Promise<IChatRoom[]> => {
   const chatRooms = querySnapshot
     .docs
     .map(doc => ({
-      ...doc.data() as IChatRoom,
+      ...doc.data() as ChatRoom,
       id: doc.id
     }));
 

@@ -1,4 +1,4 @@
-export interface INewRoomSubscription {
+export interface NewRoomSubscription {
   userId?: string;
   roomId: string;
   pushNotificationToken?: string | null;

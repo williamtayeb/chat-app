@@ -5,25 +5,25 @@ import { RouteProp, useNavigationState } from '@react-navigation/native';
 import { FirebaseFirestoreTypes as FirestoreTypes } from '@react-native-firebase/firestore';
 
 import { RoomView } from "./RoomView";
-import { IMessage } from "models/types";
+import { Message } from "models/types";
 import { addImageMessage, addTextMessage, getMessagesByRoomId } from "models/message";
 import { getErrorMessage } from "errors/utils";
 import { RoomNavigationProp } from "navigation/types";
 import { getImageFromCamera, getImageFromGallery } from "services/image-picker";
-import { IImage, uploadImage } from "services/storage";
+import { StorageImage, uploadImage } from "services/storage";
 import { requestPushNotificationPermission } from "services/messaging";
 import { addRoomSubscription, checkUserRoomSubscriptionExists } from "models/room-subscription";
 
-interface IRoomProps {
+interface RoomProps {
   route: RouteProp<{ params: { roomId: string }}, 'params'>,
   navigation: RoomNavigationProp
 }
 
-export const Room: React.FC<IRoomProps> = ({ route, navigation }) => {
+export const Room: React.FC<RoomProps> = ({ route, navigation }) => {
   const { roomId } = route.params;
   const navigationIndex = useNavigationState(state => state.index);
 
-  const [messages, setMessages] = useState<IMessage[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState<string>();
   const [errorMessage, setErrorMessage] = useState<string | null>();
 
@@ -52,7 +52,7 @@ export const Room: React.FC<IRoomProps> = ({ route, navigation }) => {
     checkRoomSubscriptionStatus();
   }, [roomId]);
 
-  const retrieveMessages = async (): Promise<void> => {
+  const retrieveMessages = async () => {
     try {
       const result = await getMessagesByRoomId(roomId);
 
@@ -64,7 +64,7 @@ export const Room: React.FC<IRoomProps> = ({ route, navigation }) => {
     }
   }
 
-  const handleBackPress = (): void => {
+  const handleBackPress = () => {
     if (navigationIndex == 0) {
       // Navigate to the chat rooms screen if there is no 
       // screen to go back to. This usually happens if we
@@ -76,7 +76,7 @@ export const Room: React.FC<IRoomProps> = ({ route, navigation }) => {
     navigation.goBack();
   }
 
-  const retrieveMoreMessages = async (): Promise<void> => {
+  const retrieveMoreMessages = async () => {
     try {
       const result = await getMessagesByRoomId(roomId, lastVisible);
 
@@ -89,7 +89,7 @@ export const Room: React.FC<IRoomProps> = ({ route, navigation }) => {
     }
   }
 
-  const handleCameraPress = async (): Promise<void> => {
+  const handleCameraPress = async () => {
     setDisplayImageUploadOptions(false);
 
     try {
@@ -103,7 +103,7 @@ export const Room: React.FC<IRoomProps> = ({ route, navigation }) => {
     }
   }
 
-  const handleGalleryPress = async (): Promise<void> => {
+  const handleGalleryPress = async () => {
     setDisplayImageUploadOptions(false);
 
     try {
@@ -122,7 +122,7 @@ export const Room: React.FC<IRoomProps> = ({ route, navigation }) => {
    * Finally update the state to with the new image message.
    * @param image The image to process
    */
-  const processImage = async (image: IImage) => {
+  const processImage = async (image: StorageImage) => {
     const imageUrl = await uploadImage(image);
     const newMessage = await addImageMessage(roomId, imageUrl);
 
@@ -131,15 +131,15 @@ export const Room: React.FC<IRoomProps> = ({ route, navigation }) => {
     setMessages([newMessage, ...messages])
   }
 
-  const handleUploadImagePress = (): void => {
+  const handleUploadImagePress = () => {
     setDisplayImageUploadOptions(!displayImageUploadOptions);
   }
 
-  const handleInputChangeText = (text: string): void => {
+  const handleInputChangeText = (text: string) => {
     setInputValue(text);
   }
 
-  const sendMessage = async (): Promise<void> => {
+  const sendMessage = async () => {
     if (!inputValue || inputValue.length == 0) return;
 
     try {
@@ -158,11 +158,11 @@ export const Room: React.FC<IRoomProps> = ({ route, navigation }) => {
     }
   }
 
-  const dismissError = (): void => {
+  const dismissError = () => {
     setErrorMessage(null);
   }
 
-  const enablePushNotifications = async (): Promise<void> => {
+  const enablePushNotifications = async () => {
     setDisplayPushNotificationAlert(false);
 
     try {
@@ -179,7 +179,7 @@ export const Room: React.FC<IRoomProps> = ({ route, navigation }) => {
     }
   }
 
-  const disablePushNotifications = async (): Promise<void> => {
+  const disablePushNotifications = async () => {
     setDisplayPushNotificationAlert(false);
 
     try {
@@ -190,7 +190,7 @@ export const Room: React.FC<IRoomProps> = ({ route, navigation }) => {
     }
   }
 
-  const checkRoomSubscriptionStatus = async (): Promise<void> => {
+  const checkRoomSubscriptionStatus = async () => {
     try {
       const exists = await checkUserRoomSubscriptionExists(roomId);
 

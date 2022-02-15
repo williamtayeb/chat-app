@@ -1,18 +1,18 @@
 import React, { useContext } from "react";
 import { StatusBar, StyleSheet, View } from "react-native";
 
-import { ITheme } from "styles";
+import { Theme } from "styles/types";
 import { ThemeContext } from "context";
 import { Button, ButtonOutline } from "./components";
 import { handleErrorMessage } from "errors/utils";
+import { ErrorProp } from "errors";
 
 import Logo from "assets/logo.svg";
 
-interface ILoginViewProps {
+interface LoginViewProps {
   onFacebookLoginPress: () => any;
   onGoogleLoginPress: () => any;
-  onErrorAlertDismissPress: () => any;
-  errorMessage: string | null | undefined;
+  error: ErrorProp;
 }
 
 /**
@@ -27,16 +27,15 @@ interface ILoginViewProps {
  * @param errorMessage A string that contains a possible error
  * message.
  */
-export const LoginView: React.FC<ILoginViewProps> = ({
+export const LoginView: React.FC<LoginViewProps> = ({
   onFacebookLoginPress,
   onGoogleLoginPress,
-  onErrorAlertDismissPress,
-  errorMessage
+  error
 }) => {
   const theme = useContext(ThemeContext);
   const styles = buildStyleSheet(theme);
 
-  handleErrorMessage(errorMessage, onErrorAlertDismissPress);
+  handleErrorMessage(error.message, error.onDismissPress);
 
   return (
     <View style={{ flex: 1 }}>
@@ -65,7 +64,7 @@ export const LoginView: React.FC<ILoginViewProps> = ({
   );
 };
 
-const buildStyleSheet = (theme: ITheme) => StyleSheet.create({
+const buildStyleSheet = (theme: Theme) => StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',

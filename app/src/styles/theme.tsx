@@ -1,5 +1,5 @@
 import { colors } from "./colors";
-import { ITheme } from "./ITheme";
+import { Theme } from "./types";
 
 const text = {
   fontFamily: 'Montserrat',
@@ -7,7 +7,7 @@ const text = {
   color: colors.text
 };
 
-export const theme: ITheme = {
+export const theme: Theme = {
   colors: {
     ...colors
   },
