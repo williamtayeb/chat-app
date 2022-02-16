@@ -1,3 +1,6 @@
+# Description
+A simple chat app that is implemented with React Native in Typescript. The project utilizes Firebase as a backend.
+
 # Project Overview
 
 ```
@@ -26,4 +29,22 @@
             └── index.ts -- Contains a single firestore trigger function that is run 
                             whenever a new message has been created within the 
                             `messages` firestore collection.
+```
+
+# Getting Started
+
+## Prerequisites
+Please setup your development environment by following:
+- [Setting up the development environment](https://reactnative.dev/docs/environment-setup)
+
+## Running
+Open a terminal and locate the React Native project folder `app`. Start Metro bundler by executing the following command:
+```
+npx react-native start
+```
+
+### Android
+In order to run the app inside an android emulator open a new terminal inside the React Native project folder and execute the following command:
+```
+npx react-native run-android
 ```
