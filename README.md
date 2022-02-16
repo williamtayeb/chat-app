@@ -50,3 +50,9 @@ In order to run the app inside an android emulator open a new terminal inside th
 ```
 npx react-native run-android
 ```
+
+### iOS
+Open a new terminal inside the React Native project folder and execute the following command:
+```
+npx react-native run-ios
+```

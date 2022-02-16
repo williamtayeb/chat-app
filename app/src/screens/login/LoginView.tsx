@@ -31,7 +31,10 @@ export const LoginView: React.FC<LoginViewProps> = ({
 
   return (
     <View style={{ flex: 1 }}>
-      <StatusBar backgroundColor={theme.colors.dark} />
+      <StatusBar
+        backgroundColor={theme.colors.dark}
+        barStyle="light-content"
+      />
 
       <View style={styles.container}>
         <View style={styles.logoContainer}>

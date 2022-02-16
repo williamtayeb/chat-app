@@ -35,7 +35,10 @@ export const ChatRoomsView: React.FC<ChatRoomsViewProps> = ({
 
   return (
     <View style={{ flex: 1, backgroundColor: theme.colors.black }}>
-      <StatusBar backgroundColor={theme.colors.dark} />
+      <StatusBar
+        backgroundColor={theme.colors.dark}
+        barStyle="light-content"
+      />
       
       <FlatList
         ListHeaderComponent={Header}

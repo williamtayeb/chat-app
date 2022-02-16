@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert } from "react-native";
+import { Alert, KeyboardAvoidingView, Platform } from "react-native";
 import SplashScreen from "react-native-splash-screen";
 import { RouteProp, useNavigationState } from '@react-navigation/native';
 import { FirebaseFirestoreTypes as FirestoreTypes } from '@react-native-firebase/firestore';
@@ -236,7 +236,7 @@ export const Room: React.FC<RoomProps> = ({ route, navigation }) => {
     );
   }
 
-  return (
+  const getRoomView = () => (
     <RoomView
       messages={messages}
       onBackPress={handleBackPress}
@@ -258,4 +258,14 @@ export const Room: React.FC<RoomProps> = ({ route, navigation }) => {
       }}
     />
   );
+
+  if (Platform.OS === 'ios') {
+    return (
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="padding">
+        {getRoomView()}
+      </KeyboardAvoidingView>
+    )
+  }
+
+  return getRoomView();
 };

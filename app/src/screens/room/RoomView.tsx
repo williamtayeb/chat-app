@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { FlatList, StatusBar, StyleSheet, View } from "react-native";
+import { FlatList, SafeAreaView, StatusBar, StyleSheet, View } from "react-native";
 
 import { ThemeContext } from "context";
 import { Theme } from "styles/types";
@@ -44,8 +44,12 @@ export const RoomView: React.FC<RoomViewProps> = ({
   handleErrorMessage(error.message, error.onDismissPress);
 
   return (
-    <View style={{ flex: 1 }}>
-      <StatusBar backgroundColor={theme.colors.black} />
+    <SafeAreaView style={styles.container}>
+      <StatusBar
+        backgroundColor={theme.colors.dark}
+        barStyle="light-content"
+      />
+
       <Header onBackPress={onBackPress} />
 
       <View style={styles.messagesContainer}>
@@ -80,11 +84,15 @@ export const RoomView: React.FC<RoomViewProps> = ({
         defaultValue={input.defaultValue}
         onSendPress={input.onSendPress}
       />
-    </View>
+    </SafeAreaView>
   );
 };
 
 const buildStyleSheet = (theme: Theme) => StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: theme.colors.dark
+  },
   messagesContainer: {
     flex: 1,
     backgroundColor: theme.colors.light
