@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { Navigator, linking } from "navigation";
 import { User } from "models/types";
-import { onAuthStateChanged, signOut } from "services/auth";
+import { onAuthStateChanged } from "services/auth";
 import { ThemeContext } from "context";
 import { theme } from "styles";
 
@@ -22,9 +22,6 @@ const App: React.FC = () => {
   }
 
   useEffect(() => {
-    // TODO remove this comment and the below statement
-    //signOut();
-
     // Listen for changes to auth state to check if user
     // is already logged in
     const unsubscribe = onAuthStateChanged(handleAuthStateChanged);
