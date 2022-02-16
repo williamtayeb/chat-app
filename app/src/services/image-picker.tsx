@@ -1,6 +1,12 @@
 import { CameraOptions, ImagePickerResponse, launchCamera, launchImageLibrary } from "react-native-image-picker";
 import { StorageImage } from "./storage";
 
+/**
+ * Launches the camera that allows the user to take a photo
+ * and returns the relevant data back.
+ * @returns Image data in a format that is compatible with
+ * uploading to storage.
+ */
 export const getImageFromCamera = async (): Promise<StorageImage | null> => {
   const options: CameraOptions = {
     mediaType: 'photo',
@@ -11,6 +17,12 @@ export const getImageFromCamera = async (): Promise<StorageImage | null> => {
   return processResult(result);
 };
 
+/**
+ * Launches the gallery that allows the user to select an image
+ * and returns the relevant data back.
+ * @returns Image data in a format that is compatible with
+ * uploading to storage.
+ */
 export const getImageFromGallery = async (): Promise<StorageImage | null> => {
   const result = await launchImageLibrary({ mediaType: 'photo' });
   return processResult(result);

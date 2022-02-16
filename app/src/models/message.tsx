@@ -66,7 +66,7 @@ export const addMessage = async (message: NewMessage): Promise<Message> => {
   }
   
   // Set the 'createdAt' field to current date and time if
-  // it has not been specified
+  // it has not been specified.
   if (!newMessage.createdAt) {
     newMessage = {
       ...newMessage,

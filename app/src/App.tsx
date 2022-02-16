@@ -5,10 +5,9 @@ import { User } from "models/types";
 import { onAuthStateChanged, signOut } from "services/auth";
 import { ThemeContext } from "context";
 import { theme } from "styles";
-import { seedRandomData } from "models/utils";
 
 /**
- * This component represents the entry point for the app
+ * Represents the entry point for the app
  */
 const App: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
@@ -35,10 +34,12 @@ const App: React.FC = () => {
   // Don't mount anything while we are loading user state
   if (loading) return null;
 
-  // TODO provide linking
   return (
     <ThemeContext.Provider value={theme}>
-      <Navigator linking={linking} displayLogin={displayLogin} />
+      <Navigator
+        linking={linking}
+        displayLogin={displayLogin}
+      />
     </ThemeContext.Provider>
   );
 };

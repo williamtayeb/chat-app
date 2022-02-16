@@ -14,6 +14,7 @@ export const getPushNotificationTokens = async (roomId: string, limit: number = 
   const querySnapshot = await firestore()
     .collection(Collections.RoomSubscriptions)
     .where('roomId', '==', roomId)
+    .where('enabled', '==', true)
     .limit(limit)
     .get();
   

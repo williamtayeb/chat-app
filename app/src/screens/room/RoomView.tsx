@@ -26,6 +26,10 @@ interface RoomViewProps {
   error: ErrorProp;
 }
 
+/**
+ * Presentational component that is responsible for rendering
+ * the view of the room screen.
+ */
 export const RoomView: React.FC<RoomViewProps> = ({
   messages,
   onBackPress,

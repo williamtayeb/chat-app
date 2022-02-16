@@ -18,14 +18,6 @@ interface LoginViewProps {
 /**
  * Presentational component that is responsible for rendering
  * the login view.
- * @param onFacebookLoginPress Callback for handling when the
- * facebook login button has been pressed.
- * @param onGoogleLoginPress Callback for handling when the
- * google login button has been pressed.
- * @param onErrorAlertDismiss Callback function for handling
- * when the dismiss button on the error alert has been pressed.
- * @param errorMessage A string that contains a possible error
- * message.
  */
 export const LoginView: React.FC<LoginViewProps> = ({
   onFacebookLoginPress,

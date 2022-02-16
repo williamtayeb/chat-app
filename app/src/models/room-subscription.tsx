@@ -32,6 +32,13 @@ export const addRoomSubscription = async (
     .add(newRoomSubscription);
 };
 
+/**
+ * Checks if a room subscription record already exists for
+ * the current user and the specified chat room.
+ * @param roomId Identifier of the chat room
+ * @returns A boolean value that is true if a room subscription
+ * record exists.
+ */
 export const checkUserRoomSubscriptionExists = async (roomId: string): Promise<boolean> => {
   const user = await getCurrentUser();
 

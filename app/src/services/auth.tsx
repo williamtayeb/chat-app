@@ -10,7 +10,7 @@ import { User } from "models/types";
 
 /**
  * Listen for changes in user auth state
- * @param listener Callback function that is triggered whenever
+ * @param listener Callback function that is invoked whenever
  * auth state changes
  * @returns An unsubscribe function to stop listening
  */
@@ -73,7 +73,7 @@ export const loginWithGoogle = async () => {
   await auth().signInWithCredential(googleCredential);
 }
 
-export const signOut = async (): Promise<void> => {
+export const signOut = async () => {
   await auth().signOut();
 }
 

@@ -19,6 +19,10 @@ interface RoomProps {
   navigation: RoomNavigationProp
 }
 
+/**
+ * Acts as a container for the room screen and is responsible
+ * for handling all user interactions within the room screen.
+ */
 export const Room: React.FC<RoomProps> = ({ route, navigation }) => {
   const { roomId } = route.params;
   const navigationIndex = useNavigationState(state => state.index);
@@ -46,6 +50,8 @@ export const Room: React.FC<RoomProps> = ({ route, navigation }) => {
   ] = useState<boolean>(false);
 
   useEffect(() => {
+    // Hide the splash screen in case we got here through
+    // a deep link
     SplashScreen.hide();
 
     retrieveMessages();
@@ -68,7 +74,7 @@ export const Room: React.FC<RoomProps> = ({ route, navigation }) => {
     if (navigationIndex == 0) {
       // Navigate to the chat rooms screen if there is no 
       // screen to go back to. This usually happens if we
-      // get here by deep links.
+      // get here by a deep link.
       navigation.navigate('ChatRooms');
       return;
     }
@@ -118,7 +124,7 @@ export const Room: React.FC<RoomProps> = ({ route, navigation }) => {
   }
 
   /**
-   * Upload the image to storage and store related data.
+   * Upload the image to storage and store related data to db.
    * Finally update the state to with the new image message.
    * @param image The image to process
    */
@@ -168,6 +174,8 @@ export const Room: React.FC<RoomProps> = ({ route, navigation }) => {
     try {
       const hasPermission = await requestPushNotificationPermission();
       if (!hasPermission) {
+        // We did not get permission for push notifications.
+        // Disable them so that the user does not get asked again.
         await disablePushNotifications();
         return;
       }
@@ -190,6 +198,10 @@ export const Room: React.FC<RoomProps> = ({ route, navigation }) => {
     }
   }
 
+  /**
+   * Checks if the user has already been asked about push
+   * notifications and updates state accordingly.
+   */
   const checkRoomSubscriptionStatus = async () => {
     try {
       const exists = await checkUserRoomSubscriptionExists(roomId);

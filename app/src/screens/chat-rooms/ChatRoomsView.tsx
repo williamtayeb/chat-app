@@ -15,6 +15,14 @@ interface ChatRoomsViewProps {
   error: ErrorProp;
 }
 
+/**
+ * Presentational component responsible for rendering the
+ * view of the chat rooms screen.
+ * @param rooms An array of chat room data that is used to 
+ * display a list of chat rooms. 
+ * @param refreshing A boolean value that determines whether
+ * chat rooms are currently being refreshed.
+ */
 export const ChatRoomsView: React.FC<ChatRoomsViewProps> = ({
   rooms,
   onChatRoomItemPress,

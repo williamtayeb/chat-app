@@ -9,6 +9,12 @@ interface NavigatorProps {
   displayLogin: boolean;
 }; 
 
+/**
+ * Configures navigation for the app
+ * @param linking Configures deep links for navigation
+ * @param displayLogin A boolean value that determines whether
+ * the login screen should be displayed. 
+ */
 export const Navigator: React.FC<NavigatorProps> = ({
   linking,
   displayLogin

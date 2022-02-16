@@ -11,6 +11,11 @@ interface ChatRoomsProps {
   navigation: ChatRoomsNavigationProp;
 }
 
+/**
+ * Container component for the chat rooms screen. Responsible
+ * for retrieving list of chat rooms and handling user
+ * interactions.
+ */
 export const ChatRooms: React.FC<ChatRoomsProps> = ({ navigation }) => {
   const [rooms, setRooms] = useState<ChatRoom[]>();
   const [refreshing, setRefreshing] = useState<boolean>(false);
