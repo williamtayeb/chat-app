@@ -1,6 +1,8 @@
 # Description
 A simple chat app that is implemented with React Native in Typescript. The project utilizes Firebase as a backend.
 
+![Screenshots](https://i.imgur.com/FXlSRSg.png)
+
 # Project Overview
 
 ```
