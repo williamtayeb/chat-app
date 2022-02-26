@@ -52,7 +52,12 @@ npx react-native run-android
 ```
 
 ### iOS
-Open a new terminal inside the React Native project folder and execute the following command:
+If you are running for the first time then execute the following within the `app/ios` folder:
+```
+pod install
+```
+
+Then go back to the `app` folder and execute the following command:
 ```
 npx react-native run-ios
 ```
